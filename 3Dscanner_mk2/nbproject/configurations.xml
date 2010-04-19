@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>GUI.h</itemPath>
+      <itemPath>ImageLoader.h</itemPath>
+      <itemPath>ModelGen.h</itemPath>
+      <itemPath>QCamObject.h</itemPath>
+      <itemPath>QCanny.h</itemPath>
+      <itemPath>QChromaKey.h</itemPath>
+      <itemPath>QDilate.h</itemPath>
+      <itemPath>QDisplayWidget.h</itemPath>
+      <itemPath>QErode.h</itemPath>
+      <itemPath>common.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>GUI.cpp</itemPath>
+      <itemPath>ImageLoader.cpp</itemPath>
+      <itemPath>ModelGen.cpp</itemPath>
+      <itemPath>QCamObject.cpp</itemPath>
+      <itemPath>QCanny.cpp</itemPath>
+      <itemPath>QChromaKey.cpp</itemPath>
+      <itemPath>QDilate.cpp</itemPath>
+      <itemPath>QDisplayWidget.cpp</itemPath>
+      <itemPath>QErode.cpp</itemPath>
+      <itemPath>QSmooth.cpp</itemPath>
+      <itemPath>QSmooth.h</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="4">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <qt>
+        <modules>core gui</modules>
+      </qt>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/local/include/opencv</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>/usr/local/lib/libcv.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/lib/libcvaux.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/lib/libcxcore.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="4">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>
