@@ -8,7 +8,7 @@
 #include "ImageLoader.h"
 
 ImageLoader::ImageLoader(QWidget *parent, const char *name) {
-    layout = new QHBoxLayout(this);
+    layout = new QGridLayout(this);
     file_opener = new QFileDialog();
     file_opener->setNameFilter(tr("Images (*.png *.bmp *.jpg *.jpeg)"));
     file_opener->setFileMode(QFileDialog::ExistingFiles);
@@ -21,10 +21,11 @@ ImageLoader::ImageLoader(QWidget *parent, const char *name) {
     QPushButton *next_button = new QPushButton("Next Image");
     QPushButton *prev_button = new QPushButton("Prev Image");
     QPushButton *load_textures = new QPushButton("Load Textures");
-    layout->addWidget(load_button);
-    layout->addWidget(prev_button);
-    layout->addWidget(next_button);
-    layout->addWidget(load_textures);
+    layout->addWidget(load_button, 0, 0);
+    layout->addWidget(load_textures, 0, 1);
+    layout->addWidget(prev_button, 1, 0);
+    layout->addWidget(next_button, 1, 1);
+
 
     connect(load_button, SIGNAL(clicked(bool)), this, SLOT(displayLoadDialog(bool)));
     connect(load_textures, SIGNAL(clicked(bool)), this, SLOT(displayTexDialog(bool)));
@@ -101,6 +102,21 @@ void ImageLoader::prevImage(bool passed) {
         if (image_index == -1) {
             image_index = image_list.size() - 1;
         }
+        QImage current_image;
+        current_image.load(image_list.at(image_index));
+        emit newImage(current_image);
+        if (image_list.size() == tex_list.size()) {
+            QImage current_tex;
+            current_tex.load(tex_list.at(image_index));
+            emit newTexture(current_tex);
+        } else {
+            cerr << "No or too few texture images loaded" << endl;
+        }
+    }
+}
+
+void ImageLoader::getImage() {
+    if (image_list.size() > 0) {
         QImage current_image;
         current_image.load(image_list.at(image_index));
         emit newImage(current_image);

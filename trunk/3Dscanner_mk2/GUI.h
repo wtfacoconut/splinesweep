@@ -7,12 +7,12 @@
 
 #ifndef _GUI_H
 #define	_GUI_H
-#include <QWidget>
-#include <QLayout>
-#include <QTimer>
+
+#include "common.h"
 #include "ImageLoader.h"
 #include "ModelGen.h"
 #include "QDisplayWidget.h"
+#include "SplineGenerator.h"
 
 class GUI : public QWidget {
     Q_OBJECT
@@ -22,9 +22,11 @@ public:
 public slots:
     void generateModel(bool passed);
 private:
-    QLayout *layout;
+    QGridLayout *layout;
     ImageLoader *loader;
-    QDisplayWidget *displaywidget;
+    QDisplayWidget *spline_display;
+    QDisplayWidget *texture_display;
+    SplineGenerator *splinegen;
     ModelGen *modelgen;
 };
 
