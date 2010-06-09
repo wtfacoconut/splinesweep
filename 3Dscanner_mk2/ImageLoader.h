@@ -28,7 +28,8 @@ public:
     virtual ~ImageLoader();
     int getNumImages();
 public slots:
-        void nextImage(bool passed);
+    void getImage();
+    void nextImage(bool passed);
     void prevImage(bool passed);
 signals:
     void newImage(QImage image);
@@ -37,7 +38,7 @@ signals:
 private:
     QFileDialog *file_opener;
     QFileDialog *tex_opener;
-    QHBoxLayout *layout;
+    QGridLayout *layout;
     QStringList image_list;
     int image_index;
     QStringList tex_list;

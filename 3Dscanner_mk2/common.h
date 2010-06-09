@@ -13,7 +13,10 @@
 #include <QPainter>
 #include <QLayout>
 #include <QGridLayout>
+#include <QLabel>
+#include <QSpinBox>
 #include <QVector>
+#include <QList>
 //Standard Inculdes
 #include <iostream>
 #include <math.h>

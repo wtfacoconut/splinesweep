@@ -18,14 +18,34 @@ QDisplayWidget::~QDisplayWidget() {
 
 void QDisplayWidget::setImage(QImage passed_image) {
     image = passed_image;
+    image = image.scaledToWidth(WIDTH);
     this->setFixedSize(image.width(),image.height());
     repaint();
     emit newImage(image);
     return;
 }
 
+
+void QDisplayWidget::setAlphaChannel(QImage passed_image)
+{
+   alpha_channel = passed_image;
+   for(int y=0; y< alpha_channel.height(); y++)
+   {
+       for(int x=0; x< alpha_channel.width(); x++)
+       {
+           QRgb pixel = alpha_channel.pixel(x,y);
+           alpha_channel.setPixel(x,y,qRgb(qRed(pixel),qRed(pixel),qRed(pixel)));
+       }
+   }
+   alpha_channel = alpha_channel.scaledToWidth(WIDTH);
+}
+
 void QDisplayWidget::paintEvent(QPaintEvent *event) {
     QPainter widgetPainter(this);
+    if(alpha_channel.width() == image.width() && alpha_channel.height() == image.height())
+    {
+        image.setAlphaChannel(alpha_channel);
+    }
     widgetPainter.drawImage(image_x, image_y, image);
     return;
 }

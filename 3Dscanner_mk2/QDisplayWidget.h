@@ -11,8 +11,7 @@
 //Standard Includes
 #include "common.h"
 #include <QMouseEvent>
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 320
 
 class QDisplayWidget : public QWidget {
     Q_OBJECT
@@ -23,12 +22,14 @@ public:
 
 public slots:
     void setImage(QImage passed_image);
+    void setAlphaChannel(QImage passed_image);
 signals:
     void newImage(QImage image);
 
 private:
     void mouseMoveEvent(QMouseEvent *event);
     QImage image;
+    QImage alpha_channel;
     int image_x;
     int image_y;
 };
