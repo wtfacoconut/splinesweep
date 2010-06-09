@@ -36,12 +36,14 @@ signals:
     void newNumImages(int num);
 private:
     QFileDialog *file_opener;
-     QFileDialog *tex_opener;
+    QFileDialog *tex_opener;
     QHBoxLayout *layout;
-    QList<QImage> image_list;
+    QStringList image_list;
     int image_index;
-        QList<QImage> tex_list;
+    QStringList tex_list;
     int tex_index;
+
+
 private slots:
     void loadImages(const QStringList & selected);
     void loadTextures(const QStringList & selected);

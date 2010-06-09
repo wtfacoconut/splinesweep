@@ -39,42 +39,33 @@ ImageLoader::~ImageLoader() {
 }
 
 void ImageLoader::loadImages(const QStringList & selected) {
-    image_list.clear();
+    image_list = selected;
     image_index = 0;
-    int num_files = selected.length();
+    //int num_files = selected.length();
 
-    for (int loop = 0; loop < num_files; loop++) {
+    /*for (int loop = 0; loop < num_files; loop++) {
         QImage image;
         image.load(selected.at(loop));
         image_list.push_back(image);
-    }
+    }*/
+
+
     if (image_list.size() > 0) {
 
         emit newNumImages(image_list.size());
-        /*for(int loop =0 ;loop <image_list.size();loop++)
-        {
-           emit newImage(image_list.at(loop));
-        }*/
     }
 }
 
 void ImageLoader::loadTextures(const QStringList & selected) {
-    tex_list.clear();
+    tex_list = selected;
     tex_index = 0;
-    int num_files = selected.length();
+    //int num_files = selected.length();
 
-    for (int loop = 0; loop < num_files; loop++) {
+    /*for (int loop = 0; loop < num_files; loop++) {
         QImage image;
         image.load(selected.at(loop));
         tex_list.push_back(image);
-    }
-    if (tex_list.size() > 0) {
-        //emit newNumImages(image_list.size());
-        /*for(int loop =0 ;loop <image_list.size();loop++)
-        {
-           emit newImage(image_list.at(loop));
-        }*/
-    }
+    }*/
 }
 
 void ImageLoader::displayLoadDialog(bool passed) {
@@ -91,13 +82,15 @@ void ImageLoader::nextImage(bool passed) {
         if (image_index == image_list.size()) {
             image_index = 0;
         }
-        emit newImage(image_list.at(image_index));
-        if(image_list.size() == tex_list.size())
-        {
-            emit newTexture(tex_list.at(image_index));
-        }else
-        {
-            cerr<<"No or too few texture images loaded"<<endl;
+        QImage current_image;
+        current_image.load(image_list.at(image_index));
+        emit newImage(current_image);
+        if (image_list.size() == tex_list.size()) {
+            QImage current_tex;
+            current_tex.load(tex_list.at(image_index));
+            emit newTexture(current_tex);
+        } else {
+            cerr << "No or too few texture images loaded" << endl;
         }
     }
 }
@@ -108,13 +101,15 @@ void ImageLoader::prevImage(bool passed) {
         if (image_index == -1) {
             image_index = image_list.size() - 1;
         }
-        emit newImage(image_list.at(image_index));
-                if(image_list.size() == tex_list.size())
-        {
-            emit newTexture(tex_list.at(image_index));
-        }else
-        {
-            cerr<<"No or too few texture images loaded"<<endl;
+        QImage current_image;
+        current_image.load(image_list.at(image_index));
+        emit newImage(current_image);
+        if (image_list.size() == tex_list.size()) {
+            QImage current_tex;
+            current_tex.load(tex_list.at(image_index));
+            emit newTexture(current_tex);
+        } else {
+            cerr << "No or too few texture images loaded" << endl;
         }
     }
 }

@@ -12,13 +12,7 @@
 #include <QTimer>
 #include "ImageLoader.h"
 #include "ModelGen.h"
-#include "QCamObject.h"
 #include "QDisplayWidget.h"
-#include "QChromaKey.h"
-#include "QDilate.h"
-#include "QErode.h"
-#include "QCanny.h"
-#include "QSmooth.h"
 
 class GUI : public QWidget {
     Q_OBJECT
@@ -29,17 +23,9 @@ public slots:
     void generateModel(bool passed);
 private:
     QLayout *layout;
-    QCamObject *camobject;
     ImageLoader *loader;
     QDisplayWidget *displaywidget;
     ModelGen *modelgen;
-    QChromaKey *chromakey1;
-    QChromaKey *chromakey2;
-    QErode *erode;
-    QDilate *dilate;
-    QCanny *canny;
-    QSmooth *smooth;
-    QTimer *timer;
 };
 
 #endif	/* _GUI_H */

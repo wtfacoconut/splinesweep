@@ -10,7 +10,7 @@
 QDisplayWidget::QDisplayWidget(QWidget *parent, const char *name) {
     image_x = 0;
     image_y = 0;
-    this->setFixedSize(WIDTH, HEIGHT);
+    //this->setFixedSize(WIDTH, HEIGHT);
 }
 
 QDisplayWidget::~QDisplayWidget() {
@@ -18,25 +18,7 @@ QDisplayWidget::~QDisplayWidget() {
 
 void QDisplayWidget::setImage(QImage passed_image) {
     image = passed_image;
-    image.scaledToWidth(WIDTH, Qt::SmoothTransformation);
-
-    for (int y = 0; y < image.height(); y++) {
-        double avg = 0;
-        double count = 0;
-        for (int x = 0; x < image.width(); x++) {
-            QRgb pixel = image.pixel(x, y);
-            if (qRed(pixel) > 0) {
-                avg = avg + x;
-                count++;
-                image.setPixel(x,y,qRgb(0,0,0));
-            }
-        }
-        avg = avg / count;
-        if (avg > 0 && avg <= image.width()) {
-            image.setPixel(avg, y, qRgb(255, 0, 0));
-        }
-    }
-
+    this->setFixedSize(image.width(),image.height());
     repaint();
     emit newImage(image);
     return;
