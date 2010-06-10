@@ -52,21 +52,24 @@ void ImageLoader::loadImages(const QStringList & selected) {
 
 
     if (image_list.size() > 0) {
-
         emit newNumImages(image_list.size());
+        if (image_list.size() == tex_list.size()) {
+            emit newEnableTexture(true);
+        } else {
+            emit newEnableTexture(false);
+        }
     }
 }
 
 void ImageLoader::loadTextures(const QStringList & selected) {
     tex_list = selected;
     tex_index = 0;
-    //int num_files = selected.length();
 
-    /*for (int loop = 0; loop < num_files; loop++) {
-        QImage image;
-        image.load(selected.at(loop));
-        tex_list.push_back(image);
-    }*/
+    if (image_list.size() == tex_list.size()) {
+        emit newEnableTexture(true);
+    } else {
+        emit newEnableTexture(false);
+    }
 }
 
 void ImageLoader::displayLoadDialog(bool passed) {
@@ -127,6 +130,26 @@ void ImageLoader::getImage() {
         } else {
             cerr << "No or too few texture images loaded" << endl;
         }
+    }
+}
+
+void ImageLoader::getTexture(int passed_index) {
+    if (tex_list.size() > 0) {
+        if (passed_index > tex_list.size())return;
+        if (passed_index < 0)return;
+        QImage current_texture;
+        current_texture.load(tex_list.at(passed_index));
+        emit newTexture(current_texture);
+    }
+}
+
+void ImageLoader::getImage(int passed_index) {
+    if (image_list.size() > 0) {
+        if (passed_index > image_list.size())return;
+        if (passed_index < 0)return;
+        QImage current_image;
+        current_image.load(image_list.at(passed_index));
+        emit newImage(current_image);
     }
 }
 
