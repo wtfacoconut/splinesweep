@@ -12,6 +12,8 @@
 #include "common.h"
 #include <QMouseEvent>
 #define WIDTH 320
+#define HEIGHT 240
+#define SCALE 4
 
 class QDisplayWidget : public QWidget {
     Q_OBJECT
@@ -23,6 +25,7 @@ public:
 public slots:
     void setImage(QImage passed_image);
     void setAlphaChannel(QImage passed_image);
+        void setCenterOfRotation(int passed);
 signals:
     void newImage(QImage image);
 
@@ -32,6 +35,7 @@ private:
     QImage alpha_channel;
     int image_x;
     int image_y;
+    int center_line;
 };
 
 #endif	/* _QDISPLAYWIDGET_H */

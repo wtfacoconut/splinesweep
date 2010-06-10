@@ -31,10 +31,13 @@ public slots:
     void getImage();
     void nextImage(bool passed);
     void prevImage(bool passed);
+    void getTexture(int passed_index);
+    void getImage(int passed_index);
 signals:
     void newImage(QImage image);
     void newTexture(QImage image);
     void newNumImages(int num);
+    void newEnableTexture(bool passed);
 private:
     QFileDialog *file_opener;
     QFileDialog *tex_opener;

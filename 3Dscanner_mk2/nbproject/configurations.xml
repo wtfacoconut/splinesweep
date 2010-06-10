@@ -6,7 +6,8 @@
                    projectFiles="true">
       <itemPath>GUI.h</itemPath>
       <itemPath>ImageLoader.h</itemPath>
-      <itemPath>ModelGen.h</itemPath>
+      <itemPath>ModelGenerator.cpp</itemPath>
+      <itemPath>ModelGenerator.h</itemPath>
       <itemPath>QDisplayWidget.h</itemPath>
       <itemPath>SplineGenerator.h</itemPath>
       <itemPath>common.h</itemPath>
@@ -20,7 +21,6 @@
                    projectFiles="true">
       <itemPath>GUI.cpp</itemPath>
       <itemPath>ImageLoader.cpp</itemPath>
-      <itemPath>ModelGen.cpp</itemPath>
       <itemPath>QDisplayWidget.cpp</itemPath>
       <itemPath>SplineGenerator.cpp</itemPath>
       <itemPath>main.cpp</itemPath>

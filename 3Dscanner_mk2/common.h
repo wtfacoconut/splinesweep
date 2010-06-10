@@ -16,7 +16,9 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QVector>
+#include <QTabWidget>
 #include <QList>
+#include <QPushButton>
 //Standard Inculdes
 #include <iostream>
 #include <math.h>
