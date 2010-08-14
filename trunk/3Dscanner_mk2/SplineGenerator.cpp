@@ -31,18 +31,16 @@ SplineGenerator::SplineGenerator() {
 SplineGenerator::~SplineGenerator() {
 }
 
-void SplineGenerator::setImage(QImage passed) {
+
+QVector<int> SplineGenerator::process(QImage passed){
+
     image = passed;
-    process();
-    emit newImage(image);
-}
-
-void SplineGenerator::process() {
-
     //threshold the image
     threshold();
     //find the maximum value along the horizontal axis
     calcHorixontalValue();
+
+    return points;
 }
 
 void SplineGenerator::threshold() {
@@ -67,18 +65,17 @@ void SplineGenerator::setMaxThreshold(int passed) {
     threshold_max = passed;
     threshold_min_spinbox->setRange(0, threshold_max);
     cerr << "Setting max threshold to: " << passed << endl;
-    emit requestImage();
 }
 
 void SplineGenerator::setMinThreshold(int passed) {
     threshold_min = passed;
     threshold_max_spinbox->setRange(threshold_min, 255);
     cerr << "Setting min threshold to: " << passed << endl;
-    emit requestImage();
 }
 
 void SplineGenerator::calcHorixontalValue() {
 
+    QVector<int> current;
     for (int y = 0; y < image.height(); y++) {
         //Find the position of the first x value along a each line
         int x_value=0;
@@ -92,5 +89,7 @@ void SplineGenerator::calcHorixontalValue() {
             }
         }
         if(x_value>0)image.setPixel(x_value, y, qRgb(0, 0, 255));
+        current.push_front(x_value);
     }
+    points = current;
 }

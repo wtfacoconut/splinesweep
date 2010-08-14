@@ -11,10 +11,11 @@
 #include "common.h"
 #include "ModelGenerator.h"
 #include "SplineGenerator.h"
-#include "ModelManager.h"
+#include "ImageManager.h"
 #include "TextureDisplay.h"
 #include "SplineDisplay.h"
 #include "ImageDisplay.h"
+#include "ImageManager.h"
 
 class GUI : public QWidget {
     Q_OBJECT
@@ -26,12 +27,7 @@ public slots:
 private:
     QTabWidget *optiontabs;
     QGridLayout *layout;
-    ImageDisplay *image_display;
-    TextureDisplay *texture_display;
-    SplineDisplay *spline_display;
-    SplineGenerator *splinegen;
-    ModelGenerator *modelgen;
-    ModelManager *modelmanager;
+    ImageManager *image_manager;
 };
 
 #endif	/* _GUI_H */

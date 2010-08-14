@@ -1,19 +1,24 @@
 /* 
- * File:   ModelManager.cpp
+ * File:   ImageManager.cpp
  * Author: matt
  * 
  * Created on 13 August 2010, 19:01
  */
 
-#include "ModelManager.h"
+#include "ImageManager.h"
+#include "SplineGenerator.h"
 
-ModelManager::ModelManager() {
+ImageManager::ImageManager() {
     top_crop = 0;
     bottom_crop = 0;
     center_of_rotation = 0.5;
     textures_ready = false;
     images_ready = false;
     splines_ready = false;
+    image_index = 0;
+
+    image_display = new ImageDisplay(this, 0);
+    texture_display = new TextureDisplay(this, 0);
 
     layout = new QGridLayout(this);
     file_opener = new QFileDialog();
@@ -26,20 +31,30 @@ ModelManager::ModelManager() {
     tex_opener->setVisible(false);
     QPushButton *load_button = new QPushButton("Load Images");
     QPushButton *load_textures = new QPushButton("Load Textures");
-    layout->addWidget(load_button, 0, 0);
-    layout->addWidget(load_textures, 0, 1);
+    QPushButton *next_image = new QPushButton(">");
+    QPushButton *prev_image = new QPushButton("<");
+
+    layout->addWidget(image_display, 0, 0, 1, 2);
+    layout->addWidget(texture_display, 1, 0, 1, 2);
+    layout->addWidget(load_button, 2, 0, 1, 2);
+    layout->addWidget(load_textures, 3, 0, 1, 2);
+    layout->addWidget(prev_image, 4, 0, 1, 1);
+    layout->addWidget(next_image, 4, 1, 1, 1);
 
 
     connect(load_button, SIGNAL(clicked(bool)), this, SLOT(displayLoadDialog(bool)));
     connect(load_textures, SIGNAL(clicked(bool)), this, SLOT(displayTexDialog(bool)));
     connect(file_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadImages(const QStringList &)));
     connect(tex_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadTextures(const QStringList &)));
+    connect(next_image,SIGNAL(clicked(bool)),this,SLOT(nextImage(bool)));
+    connect(prev_image,SIGNAL(clicked(bool)),this,SLOT(prevImage(bool)));
+    cerr << "Done init image manager" << endl;
 }
 
-ModelManager::~ModelManager() {
+ImageManager::~ImageManager() {
 }
 
-QImage ModelManager::getImage(int location) {
+QImage ImageManager::getImage(int location) {
     QImage image;
     if (image_locations.size() == 0) {
         image = QImage(800, 600, QImage::Format_RGB32);
@@ -52,7 +67,7 @@ QImage ModelManager::getImage(int location) {
 
 }
 
-QImage ModelManager::getFirstImage() {
+QImage ImageManager::getFirstImage() {
     QImage image;
     if (image_locations.size() == 0) {
         image = QImage(800, 600, QImage::Format_RGB32);
@@ -64,7 +79,7 @@ QImage ModelManager::getFirstImage() {
     return image;
 }
 
-QImage ModelManager::getLastImage() {
+QImage ImageManager::getLastImage() {
     QImage image;
     if (image_locations.size() == 0) {
         image = QImage(800, 600, QImage::Format_RGB32);
@@ -76,7 +91,7 @@ QImage ModelManager::getLastImage() {
     return image;
 }
 
-QImage ModelManager::getTexture(int location) {
+QImage ImageManager::getTexture(int location) {
     QImage texture;
     if (texture_locations.size() == 0) {
         texture = QImage(800, 600, QImage::Format_RGB32);
@@ -89,7 +104,7 @@ QImage ModelManager::getTexture(int location) {
     return texture;
 }
 
-QImage ModelManager::getFirstTexture() {
+QImage ImageManager::getFirstTexture() {
     QImage texture;
     if (texture_locations.size() == 0) {
         texture = QImage(800, 600, QImage::Format_RGB32);
@@ -101,7 +116,7 @@ QImage ModelManager::getFirstTexture() {
     return texture;
 }
 
-QImage ModelManager::getLastTexture() {
+QImage ImageManager::getLastTexture() {
     QImage texture;
     if (texture_locations.size() == 0) {
         texture = QImage(800, 600, QImage::Format_RGB32);
@@ -113,11 +128,11 @@ QImage ModelManager::getLastTexture() {
     return texture;
 }
 
-QVector<QVector <int> > ModelManager::getSplines() {
+QVector<QVector <int> > ImageManager::getSplines() {
     return splines;
 }
 
-QVector<int> ModelManager::getSpline(int x) {
+QVector<int> ImageManager::getSpline(int x) {
     if (x > splines.size()) {
         QVector<int> blank;
         return blank;
@@ -126,13 +141,13 @@ QVector<int> ModelManager::getSpline(int x) {
     return splines[x];
 }
 
-int ModelManager::getPoint(int x, int y) {
+int ImageManager::getPoint(int x, int y) {
     if (x > splines.size()) return 0;
     if (y > splines[x].size()) return 0;
     return splines[x][y];
 }
 
-QImage ModelManager::getSplineImage(int location) {
+QImage ImageManager::getSplineImage(int location) {
     if (location >= splines.size()) {
         cerr << "Spline: " << location << " does not exist yet" << endl;
         return QImage(800, 600, QImage::Format_RGB32);
@@ -156,11 +171,16 @@ QImage ModelManager::getSplineImage(int location) {
         QRgb pixel;
         pixel = qRgb(255, 0, 0);
         spline_image.setPixel(splines[location][loop], loop, pixel);
+
     }
     return spline_image;
 }
 
-void ModelManager::setImageLocations(QStringList passed) {
+void ImageManager::setSpline(QVector<int> passed) {
+    splines.push_back(passed);
+}
+
+void ImageManager::setImageLocations(QStringList passed) {
     QImage image;
     QSize size;
     for (int loop = 0; loop < passed.size(); loop++) {
@@ -178,11 +198,13 @@ void ModelManager::setImageLocations(QStringList passed) {
     image_locations = passed;
     images_ready = true;
     number_of_images = passed.size();
-    cerr<<"Done setting image locations"<<endl;
-    emit newModel();
+    cerr << "Done setting image locations" << endl;
+    image.load(passed.front());
+    image_display->setImage(image);
+    image_index = 0;
 }
 
-void ModelManager::setTextureLocations(QStringList passed) {
+void ImageManager::setTextureLocations(QStringList passed) {
     QImage image;
     QSize size;
     for (int loop = 0; loop < passed.size(); loop++) {
@@ -200,48 +222,43 @@ void ModelManager::setTextureLocations(QStringList passed) {
     texture_locations = passed;
     textures_ready = true;
     number_of_textures = passed.size();
-    emit newModel();
+    image.load(passed.front());
+    texture_display->setImage(image);
+    image_index = 0;
 }
 
-void ModelManager::setTopCrop(int passed) {
-    top_crop = passed;
-    emit newModel();
-}
-
-void ModelManager::setBottomCrop(int passed) {
-    bottom_crop = passed;
-    emit newModel();
-}
-
-void ModelManager::setCenterOfRotation(int passed) {
-    center_of_rotation = passed;
-    emit newModel();
-}
-
-int ModelManager::getTopCrop() {
-    return top_crop;
-}
-
-int ModelManager::getBottomCrop() {
-    return bottom_crop;
-}
-
-double ModelManager::getCenterOfRotation() {
-    return center_of_rotation;
-}
-
-void ModelManager::loadImages(const QStringList & selected) {
+void ImageManager::loadImages(const QStringList & selected) {
     setImageLocations(selected);
 }
 
-void ModelManager::loadTextures(const QStringList & selected) {
+void ImageManager::loadTextures(const QStringList & selected) {
     setTextureLocations(selected);
 }
 
-void ModelManager::displayLoadDialog(bool passed) {
+void ImageManager::displayLoadDialog(bool passed) {
     file_opener->setVisible(true);
 }
 
-void ModelManager::displayTexDialog(bool passed) {
+void ImageManager::displayTexDialog(bool passed) {
     tex_opener->setVisible(true);
+}
+
+void ImageManager::setParameters(Parameters passed) {
+    params = passed;
+    image_display->setParamters(passed);
+    texture_display->setParamters(passed);
+}
+
+void ImageManager::nextImage(bool passed) {
+    image_index++;
+    if (image_index >= image_locations.size())image_index = 0;
+    image_display->setImage(getImage(image_index));
+    texture_display->setImage(getTexture(image_index));
+}
+
+void ImageManager::prevImage(bool passed) {
+    image_index--;
+    if (image_index < 0)image_index = image_locations.size() - 1;
+    image_display->setImage(getImage(image_index));
+    texture_display->setImage(getTexture(image_index));
 }

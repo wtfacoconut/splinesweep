@@ -6,8 +6,8 @@
                    projectFiles="true">
       <itemPath>GUI.h</itemPath>
       <itemPath>ImageDisplay.h</itemPath>
+      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ImageManager.h</itemPath>
       <itemPath>ModelGenerator.h</itemPath>
-      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ModelManager.h</itemPath>
       <itemPath>SplineDisplay.h</itemPath>
       <itemPath>SplineGenerator.h</itemPath>
       <itemPath>TextureDisplay.h</itemPath>
@@ -22,8 +22,8 @@
                    projectFiles="true">
       <itemPath>GUI.cpp</itemPath>
       <itemPath>ImageDisplay.cpp</itemPath>
+      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ImageManager.cpp</itemPath>
       <itemPath>ModelGenerator.cpp</itemPath>
-      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ModelManager.cpp</itemPath>
       <itemPath>SplineDisplay.cpp</itemPath>
       <itemPath>SplineGenerator.cpp</itemPath>
       <itemPath>TextureDisplay.cpp</itemPath>

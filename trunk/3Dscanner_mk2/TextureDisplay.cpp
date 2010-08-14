@@ -12,23 +12,23 @@ TextureDisplay::TextureDisplay(QWidget *parent, const char *name) {
     image_x = 0;
     image_y = 0;
     this->setFixedSize(WIDTH, HEIGHT);
-    center_of_rotation =0;
-    top_crop =0;
-    bottom_crop =0;
+    params.bottom_crop=0;
+    params.top_crop =0;
+    params.center_of_rotation=0.5;
 }
 
 TextureDisplay::~TextureDisplay() {
 }
 
-void TextureDisplay::setModelManager(ModelManager *passed) {
-    model = passed;
+void TextureDisplay::setImage(QImage passed){
+    image = passed;
+    repaint();
 }
 
-void TextureDisplay::update(){
-    image = model->getFirstTexture();
-    center_of_rotation = model->getCenterOfRotation();
+void TextureDisplay::setParamters(Parameters passed){
+    params = passed;
     repaint();
-};
+}
 
 void TextureDisplay::paintEvent(QPaintEvent *event) {
     QPainter widgetPainter(this);
@@ -39,7 +39,7 @@ void TextureDisplay::paintEvent(QPaintEvent *event) {
 
     image = image.scaledToWidth(WIDTH);
     widgetPainter.drawImage(image_x, image_y, image);
-    widgetPainter.drawLine(center_of_rotation*WIDTH, 0,center_of_rotation*WIDTH, HEIGHT);
+    widgetPainter.drawLine(params.center_of_rotation*WIDTH, 0,params.center_of_rotation*WIDTH, HEIGHT);
     widgetPainter.end();
     return;
 }

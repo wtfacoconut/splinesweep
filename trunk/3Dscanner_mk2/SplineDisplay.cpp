@@ -17,13 +17,7 @@ SplineDisplay::SplineDisplay(QWidget *parent, const char *name) {
 SplineDisplay::~SplineDisplay() {
 }
 
-void SplineDisplay::setModelManager(ModelManager *passed) {
-    model = passed;
-}
-
 void SplineDisplay::update(){
-    image = model->getSplineImage(0);
-    center_of_rotation = model->getCenterOfRotation();
     repaint();
 };
 
