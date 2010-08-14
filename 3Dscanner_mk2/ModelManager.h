@@ -10,6 +10,7 @@
 #include "common.h"
 #include <QStringList>
 using namespace std;
+
 class ModelManager : public QWidget {
     Q_OBJECT
 public:
@@ -24,19 +25,27 @@ public:
     QVector<QVector <int> > getSplines();
     QVector<int> getSpline(int x);
     int getPoint(int x, int y);
+    QImage getSplineImage(int location);
+    void setTopCrop(int passed);
+    void setBottomCrop(int passed);
+    void setCenterOfRotation(int passed);
 
-    int top_crop;
-    int bottom_crop;
-    int center_of_rotation;
+    bool textures_ready;
+    bool images_ready;
+    bool splines_ready;
 
 public slots:
     void setImageLocations(QStringList passed);
     void setTextureLocations(QStringList passed);
 signals:
+    void newModel();
 private:
     QStringList image_locations;
     QStringList texture_locations;
     QVector<QVector <int> > splines;
+    int top_crop;
+    int bottom_crop;
+    int center_of_rotation;
 };
 
 #endif	/* _MODELMANAGER_H */
