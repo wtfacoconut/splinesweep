@@ -30,7 +30,7 @@ private:
     QImage image;
     int image_x;
     int image_y;
-    int center_of_rotation;
+    double center_of_rotation;
     ModelManager *model;
 };
 

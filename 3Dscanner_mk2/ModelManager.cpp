@@ -10,7 +10,7 @@
 ModelManager::ModelManager() {
     top_crop = 0;
     bottom_crop = 0;
-    center_of_rotation = 0;
+    center_of_rotation = 0.5;
     textures_ready = false;
     images_ready = false;
     splines_ready = false;
@@ -176,7 +176,6 @@ void ModelManager::setImageLocations(QStringList passed) {
             }
     }
     image_locations = passed;
-    center_of_rotation = image.width() / 2;
     images_ready = true;
     number_of_images = passed.size();
     cerr<<"Done setting image locations"<<endl;
@@ -227,7 +226,7 @@ int ModelManager::getBottomCrop() {
     return bottom_crop;
 }
 
-int ModelManager::getCenterOfRotation() {
+double ModelManager::getCenterOfRotation() {
     return center_of_rotation;
 }
 

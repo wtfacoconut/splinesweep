@@ -30,7 +30,7 @@ private:
     QImage image;
     int image_x;
     int image_y;
-    int center_of_rotation;
+    double center_of_rotation;
     int top_crop;
     int bottom_crop;
 
