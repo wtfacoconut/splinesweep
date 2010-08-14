@@ -21,16 +21,14 @@ public:
     virtual ~SplineDisplay();
     void paintEvent(QPaintEvent *event);
 public slots:
-    void update();
+    void setParamters(Parameters passed);
 signals:
 
 private:
     QImage image;
     int image_x;
     int image_y;
-    double center_of_rotation;
-    double top_crop;
-    double bottom_crop;
+    Parameters params;
 };
 
 #endif	/* _SplineDisplay_H */

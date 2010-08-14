@@ -26,11 +26,6 @@ public:
     QImage getTexture(int location);
     QImage getFirstTexture();
     QImage getLastTexture();
-    QVector<QVector <int> > getSplines();
-    QVector<int> getSpline(int x);
-    int getPoint(int x, int y);
-    QImage getSplineImage(int location);
-    void setSpline(QVector<int> passed);
     int getNumImages();
 
     bool textures_ready;
@@ -53,7 +48,6 @@ private:
 
     QStringList image_locations;
     QStringList texture_locations;
-    QVector<QVector <int> > splines;
     int top_crop;
     int bottom_crop;
     double center_of_rotation;

@@ -16,6 +16,7 @@
 #include "SplineDisplay.h"
 #include "ImageDisplay.h"
 #include "ImageManager.h"
+#include "ModelManager.h"
 
 class GUI : public QWidget {
     Q_OBJECT
@@ -28,6 +29,9 @@ private:
     QTabWidget *optiontabs;
     QGridLayout *layout;
     ImageManager *image_manager;
+    ModelManager *model_manager;
+    
+    QVector<QVector<int> > splines;
 };
 
 #endif	/* _GUI_H */

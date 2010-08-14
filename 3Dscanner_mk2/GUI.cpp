@@ -7,12 +7,13 @@
 
 #include "GUI.h"
 
-
 GUI::GUI(QWidget *parent, const char *name) {
 
     layout = new QGridLayout(this);
     layout->setMargin(1);
     image_manager = new ImageManager();
+    model_manager = new ModelManager();
+    model_manager->setImageManager(image_manager);
     //optiontabs= new QTabWidget();
 
     //optiontabs->addTab(modelmanager,"Image Loading");

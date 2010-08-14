@@ -11,15 +11,14 @@ SplineDisplay::SplineDisplay(QWidget *parent, const char *name) {
     image_x = 0;
     image_y = 0;
     this->setFixedSize(WIDTH, HEIGHT);
-    center_of_rotation =0;;
 }
 
 SplineDisplay::~SplineDisplay() {
 }
 
-void SplineDisplay::update(){
-    repaint();
-};
+void SplineDisplay::setParamters(Parameters passed) {
+    params = passed;
+}
 
 void SplineDisplay::paintEvent(QPaintEvent *event) {
     QPainter widgetPainter(this);
@@ -30,7 +29,11 @@ void SplineDisplay::paintEvent(QPaintEvent *event) {
 
     image = image.scaledToWidth(WIDTH);
     widgetPainter.drawImage(image_x, image_y, image);
-    widgetPainter.drawLine(center_of_rotation*WIDTH, 0,center_of_rotation*WIDTH, HEIGHT);
+    widgetPainter.drawLine(params.center_of_rotation*WIDTH, 0, params.center_of_rotation*WIDTH, HEIGHT);
+    pen.setColor(QColor(0, 0, 255));
+    widgetPainter.setPen(pen);
+    widgetPainter.drawLine(0, params.top_crop*HEIGHT, WIDTH, params.top_crop * HEIGHT);
+    widgetPainter.drawLine(0, HEIGHT - (params.top_crop * HEIGHT) - 1, WIDTH, HEIGHT - (params.top_crop * HEIGHT) - 1);
     widgetPainter.end();
     return;
 }
