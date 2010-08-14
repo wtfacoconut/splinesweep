@@ -22,8 +22,6 @@
 //Standard Inculdes
 #include <iostream>
 #include <math.h>
-//
-#include "SplineGenerator.h"
 
 #define PI 3.14159265
 

@@ -46,8 +46,8 @@ ImageManager::ImageManager() {
     connect(load_textures, SIGNAL(clicked(bool)), this, SLOT(displayTexDialog(bool)));
     connect(file_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadImages(const QStringList &)));
     connect(tex_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadTextures(const QStringList &)));
-    connect(next_image,SIGNAL(clicked(bool)),this,SLOT(nextImage(bool)));
-    connect(prev_image,SIGNAL(clicked(bool)),this,SLOT(prevImage(bool)));
+    connect(next_image, SIGNAL(clicked(bool)), this, SLOT(nextImage(bool)));
+    connect(prev_image, SIGNAL(clicked(bool)), this, SLOT(prevImage(bool)));
     cerr << "Done init image manager" << endl;
 }
 
@@ -128,26 +128,7 @@ QImage ImageManager::getLastTexture() {
     return texture;
 }
 
-QVector<QVector <int> > ImageManager::getSplines() {
-    return splines;
-}
-
-QVector<int> ImageManager::getSpline(int x) {
-    if (x > splines.size()) {
-        QVector<int> blank;
-        return blank;
-    }
-
-    return splines[x];
-}
-
-int ImageManager::getPoint(int x, int y) {
-    if (x > splines.size()) return 0;
-    if (y > splines[x].size()) return 0;
-    return splines[x][y];
-}
-
-QImage ImageManager::getSplineImage(int location) {
+/*QImage ImageManager::getSplineImage(int location) {
     if (location >= splines.size()) {
         cerr << "Spline: " << location << " does not exist yet" << endl;
         return QImage(800, 600, QImage::Format_RGB32);
@@ -174,11 +155,7 @@ QImage ImageManager::getSplineImage(int location) {
 
     }
     return spline_image;
-}
-
-void ImageManager::setSpline(QVector<int> passed) {
-    splines.push_back(passed);
-}
+}*/
 
 void ImageManager::setImageLocations(QStringList passed) {
     QImage image;
@@ -202,6 +179,8 @@ void ImageManager::setImageLocations(QStringList passed) {
     image.load(passed.front());
     image_display->setImage(image);
     image_index = 0;
+    image_display->setImage(getFirstImage());
+    texture_display->setImage(getFirstTexture());
 }
 
 void ImageManager::setTextureLocations(QStringList passed) {
@@ -225,6 +204,8 @@ void ImageManager::setTextureLocations(QStringList passed) {
     image.load(passed.front());
     texture_display->setImage(image);
     image_index = 0;
+    image_display->setImage(getFirstImage());
+    texture_display->setImage(getFirstTexture());
 }
 
 void ImageManager::loadImages(const QStringList & selected) {
@@ -263,6 +244,6 @@ void ImageManager::prevImage(bool passed) {
     texture_display->setImage(getTexture(image_index));
 }
 
-int ImageManager::getNumImages(){
+int ImageManager::getNumImages() {
     return image_locations.size();
 }
