@@ -31,6 +31,8 @@ private:
     int image_x;
     int image_y;
     double center_of_rotation;
+    double top_crop;
+    double bottom_crop;
     ModelManager *model;
 };
 
