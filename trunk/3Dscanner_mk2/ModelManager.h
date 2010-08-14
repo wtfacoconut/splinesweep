@@ -32,7 +32,7 @@ public:
     void setCenterOfRotation(int passed);
     int getTopCrop();
     int getBottomCrop();
-    int getCenterOfRotation();
+    double getCenterOfRotation();
     
     bool textures_ready;
     bool images_ready;
@@ -55,7 +55,7 @@ private:
     QVector<QVector <int> > splines;
     int top_crop;
     int bottom_crop;
-    int center_of_rotation;
+    double center_of_rotation;
 
 private slots:
     void loadImages(const QStringList & selected);

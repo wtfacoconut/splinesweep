@@ -23,7 +23,7 @@ void ImageDisplay::setModelManager(ModelManager *passed) {
 
 void ImageDisplay::update(){
     image = model->getFirstImage();
-    center_of_rotation = (float)((float)WIDTH/(float)image.width())*(float)model->getCenterOfRotation();
+    center_of_rotation = model->getCenterOfRotation();
     repaint();
 };
 
@@ -36,7 +36,7 @@ void ImageDisplay::paintEvent(QPaintEvent *event) {
 
     image = image.scaledToWidth(WIDTH);
     widgetPainter.drawImage(image_x, image_y, image);
-    widgetPainter.drawLine(center_of_rotation, 0,center_of_rotation, HEIGHT);
+    widgetPainter.drawLine(center_of_rotation*WIDTH, 0,center_of_rotation*WIDTH, HEIGHT);
     widgetPainter.end();
     return;
 }
