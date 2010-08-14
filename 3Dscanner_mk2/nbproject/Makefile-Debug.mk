@@ -17,7 +17,7 @@ CCC=g++
 CXX=g++
 FC=
 AS=as
-QMAKE=qmake-qt4
+QMAKE=qmake
 
 # Macros
 CND_PLATFORM=GNU-Linux-x86
