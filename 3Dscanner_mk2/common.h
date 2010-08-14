@@ -22,13 +22,21 @@
 //Standard Inculdes
 #include <iostream>
 #include <math.h>
+//
+#include "SplineGenerator.h"
 
 #define PI 3.14159265
 
 
 using namespace std;
 
-
+struct Parameters{
+    double center_of_rotation;
+    double top_crop;
+    double bottom_crop;
+    double upper_threshold;
+    double lower_threshold;
+};
 static inline double radianToDegree(double radian)
 {
 	double degree = 0;

@@ -14,8 +14,8 @@ class SplineGenerator : public QWidget {
 public:
     SplineGenerator();
     virtual ~SplineGenerator();
+        QVector<int> process(QImage passed);
 public slots:
-    void setImage(QImage passed);
 signals:
     void newImage(QImage result);
     void requestImage();
@@ -24,7 +24,6 @@ private slots:
     void setMaxThreshold(int passed);
     void setMinThreshold(int passed);
 private:
-    void process();
     void calcHorixontalValue();
     void threshold();
 
@@ -34,6 +33,7 @@ private:
     QSpinBox *threshold_max_spinbox;
     QGridLayout *layout;
     QImage image;
+    QVector<int> points;
 };
 
 #endif	/* _SPLINEGENERATOR_H */

@@ -1,22 +1,25 @@
 /* 
- * File:   ModelManager.h
+ * File:   ImageManager.h
  * Author: matt
  *
  * Created on 13 August 2010, 19:01
  */
 
-#ifndef _MODELMANAGER_H
-#define	_MODELMANAGER_H
+#ifndef _ImageManager_H
+#define	_ImageManager_H
 #include "common.h"
+#include "ImageDisplay.h"
+#include "TextureDisplay.h"
 #include <QStringList>
 #include <QFileDialog>
+
 using namespace std;
 
-class ModelManager : public QWidget {
+class ImageManager : public QWidget {
     Q_OBJECT
 public:
-    ModelManager();
-    virtual ~ModelManager();
+    ImageManager();
+    virtual ~ImageManager();
     QImage getImage(int location);
     QImage getFirstImage();
     QImage getLastImage();
@@ -27,12 +30,7 @@ public:
     QVector<int> getSpline(int x);
     int getPoint(int x, int y);
     QImage getSplineImage(int location);
-    void setTopCrop(int passed);
-    void setBottomCrop(int passed);
-    void setCenterOfRotation(int passed);
-    int getTopCrop();
-    int getBottomCrop();
-    double getCenterOfRotation();
+    void setSpline(QVector<int> passed);;
     
     bool textures_ready;
     bool images_ready;
@@ -43,12 +41,15 @@ public:
 public slots:
     void setImageLocations(QStringList passed);
     void setTextureLocations(QStringList passed);
+    void setParameters(Parameters passed);
 signals:
     void newModel();
 private:
     QFileDialog *file_opener;
     QFileDialog *tex_opener;
     QGridLayout *layout;
+    ImageDisplay *image_display;
+    TextureDisplay *texture_display;
 
     QStringList image_locations;
     QStringList texture_locations;
@@ -56,13 +57,17 @@ private:
     int top_crop;
     int bottom_crop;
     double center_of_rotation;
+    int image_index;
+    Parameters params;
 
 private slots:
     void loadImages(const QStringList & selected);
     void loadTextures(const QStringList & selected);
     void displayLoadDialog(bool passed);
     void displayTexDialog(bool passed);
+    void nextImage(bool passed);
+    void prevImage(bool passed);
 };
 
-#endif	/* _MODELMANAGER_H */
+#endif	/* _ImageManager_H */
 

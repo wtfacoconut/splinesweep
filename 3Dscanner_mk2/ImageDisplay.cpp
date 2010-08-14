@@ -11,21 +11,25 @@ ImageDisplay::ImageDisplay(QWidget *parent, const char *name) {
     image_x = 0;
     image_y = 0;
     this->setFixedSize(WIDTH, HEIGHT);
-    center_of_rotation =0;;
+    params.bottom_crop =0;
+    params.center_of_rotation =0.5;
+    params.top_crop =0;
 }
 
 ImageDisplay::~ImageDisplay() {
 }
 
-void ImageDisplay::setModelManager(ModelManager *passed) {
-    model = passed;
+
+void ImageDisplay::setImage(QImage passed){
+image = passed;
+repaint();
 }
 
-void ImageDisplay::update(){
-    image = model->getFirstImage();
-    center_of_rotation = model->getCenterOfRotation();
+
+void ImageDisplay::setParamters(Parameters passed){
+    params = passed;
     repaint();
-};
+}
 
 void ImageDisplay::paintEvent(QPaintEvent *event) {
     QPainter widgetPainter(this);
@@ -36,7 +40,7 @@ void ImageDisplay::paintEvent(QPaintEvent *event) {
 
     image = image.scaledToWidth(WIDTH);
     widgetPainter.drawImage(image_x, image_y, image);
-    widgetPainter.drawLine(center_of_rotation*WIDTH, 0,center_of_rotation*WIDTH, HEIGHT);
+    widgetPainter.drawLine(params.center_of_rotation*WIDTH, 0, params.center_of_rotation*WIDTH, HEIGHT);
     widgetPainter.end();
     return;
 }

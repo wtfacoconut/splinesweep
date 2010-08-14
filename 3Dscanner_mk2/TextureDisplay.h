@@ -10,7 +10,6 @@
 
 //Standard Includes
 #include "common.h"
-#include "ModelManager.h"
 #define WIDTH 320
 #define HEIGHT 240
 #define SCALE 4
@@ -21,19 +20,16 @@ public:
     TextureDisplay(QWidget *parent = 0, const char *name = 0);
     virtual ~TextureDisplay();
     void paintEvent(QPaintEvent *event);
-    void setModelManager(ModelManager *passed);
+        void setImage(QImage passed);
 public slots:
-    void update();
+    void setParamters(Parameters passed);
 signals:
 
 private:
     QImage image;
     int image_x;
     int image_y;
-    double center_of_rotation;
-    double top_crop;
-    double bottom_crop;
-    ModelManager *model;
+    Parameters params;
 };
 
 #endif	/* _TEXTUREDISPLAY_H */

@@ -10,7 +10,6 @@
 
 //Standard Includes
 #include "common.h"
-#include "ModelManager.h"
 #define WIDTH 320
 #define HEIGHT 240
 #define SCALE 4
@@ -21,7 +20,6 @@ public:
     SplineDisplay(QWidget *parent = 0, const char *name = 0);
     virtual ~SplineDisplay();
     void paintEvent(QPaintEvent *event);
-    void setModelManager(ModelManager *passed);
 public slots:
     void update();
 signals:
@@ -33,8 +31,6 @@ private:
     double center_of_rotation;
     double top_crop;
     double bottom_crop;
-
-    ModelManager *model;
 };
 
 #endif	/* _SplineDisplay_H */
