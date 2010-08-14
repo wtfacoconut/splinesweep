@@ -133,7 +133,7 @@ int ModelManager::getPoint(int x, int y) {
 }
 
 QImage ModelManager::getSplineImage(int location) {
-    if (location > splines.size()) {
+    if (location >= splines.size()) {
         cerr << "Spline: " << location << " does not exist yet" << endl;
         return QImage(800, 600, QImage::Format_RGB32);
     }
