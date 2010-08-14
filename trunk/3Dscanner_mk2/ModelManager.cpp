@@ -14,6 +14,26 @@ ModelManager::ModelManager() {
     textures_ready = false;
     images_ready = false;
     splines_ready = false;
+
+    layout = new QGridLayout(this);
+    file_opener = new QFileDialog();
+    file_opener->setNameFilter(tr("Images (*.png *.bmp *.jpg *.jpeg)"));
+    file_opener->setFileMode(QFileDialog::ExistingFiles);
+    file_opener->setVisible(false);
+    tex_opener = new QFileDialog();
+    tex_opener->setNameFilter(tr("Images (*.png *.bmp *.jpg *.jpeg)"));
+    tex_opener->setFileMode(QFileDialog::ExistingFiles);
+    tex_opener->setVisible(false);
+    QPushButton *load_button = new QPushButton("Load Images");
+    QPushButton *load_textures = new QPushButton("Load Textures");
+    layout->addWidget(load_button, 0, 0);
+    layout->addWidget(load_textures, 0, 1);
+
+
+    connect(load_button, SIGNAL(clicked(bool)), this, SLOT(displayLoadDialog(bool)));
+    connect(load_textures, SIGNAL(clicked(bool)), this, SLOT(displayTexDialog(bool)));
+    connect(file_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadImages(const QStringList &)));
+    connect(tex_opener, SIGNAL(filesSelected(const QStringList &)), this, SLOT(loadTextures(const QStringList &)));
 }
 
 ModelManager::~ModelManager() {
@@ -114,7 +134,7 @@ int ModelManager::getPoint(int x, int y) {
 
 QImage ModelManager::getSplineImage(int location) {
     if (location > splines.size()) {
-        cerr << "Spline: " << location << " does not exist" << endl;
+        cerr << "Spline: " << location << " does not exist yet" << endl;
         return QImage(800, 600, QImage::Format_RGB32);
     }
     if (splines[location].size() == 0) {
@@ -145,7 +165,7 @@ void ModelManager::setImageLocations(QStringList passed) {
     QSize size;
     for (int loop = 0; loop < passed.size(); loop++) {
         if (image.load(passed.at(loop)) == false) {
-            cerr << "Error cant load texture file: " << passed[loop].toStdString().c_str() << endl;
+            cerr << "Error cant load image file: " << passed[loop].toStdString().c_str() << endl;
             return;
         };
         if (loop == 0)size = image.size();
@@ -158,6 +178,8 @@ void ModelManager::setImageLocations(QStringList passed) {
     image_locations = passed;
     center_of_rotation = image.width() / 2;
     images_ready = true;
+    number_of_images = passed.size();
+    cerr<<"Done setting image locations"<<endl;
     emit newModel();
 }
 
@@ -178,6 +200,7 @@ void ModelManager::setTextureLocations(QStringList passed) {
     }
     texture_locations = passed;
     textures_ready = true;
+    number_of_textures = passed.size();
     emit newModel();
 }
 
@@ -194,4 +217,32 @@ void ModelManager::setBottomCrop(int passed) {
 void ModelManager::setCenterOfRotation(int passed) {
     center_of_rotation = passed;
     emit newModel();
+}
+
+int ModelManager::getTopCrop() {
+    return top_crop;
+}
+
+int ModelManager::getBottomCrop() {
+    return bottom_crop;
+}
+
+int ModelManager::getCenterOfRotation() {
+    return center_of_rotation;
+}
+
+void ModelManager::loadImages(const QStringList & selected) {
+    setImageLocations(selected);
+}
+
+void ModelManager::loadTextures(const QStringList & selected) {
+    setTextureLocations(selected);
+}
+
+void ModelManager::displayLoadDialog(bool passed) {
+    file_opener->setVisible(true);
+}
+
+void ModelManager::displayTexDialog(bool passed) {
+    tex_opener->setVisible(true);
 }

@@ -1,42 +1,38 @@
 /*
- * File:   QDisplayWidget.h
+ * File:   ImageDisplay.h
  * Author: matt
  *
  * Created on 20 January 2010, 11:54
  */
 
-#ifndef _QDISPLAYWIDGET_H
-#define	_QDISPLAYWIDGET_H
+#ifndef _ImageDisplay_H
+#define	_ImageDisplay_H
 
 //Standard Includes
 #include "common.h"
-#include <QMouseEvent>
+#include "ModelManager.h"
 #define WIDTH 320
 #define HEIGHT 240
 #define SCALE 4
 
-class QDisplayWidget : public QWidget {
+class ImageDisplay : public QWidget {
     Q_OBJECT
 public:
-    QDisplayWidget(QWidget *parent = 0, const char *name = 0);
-    virtual ~QDisplayWidget();
+    ImageDisplay(QWidget *parent = 0, const char *name = 0);
+    virtual ~ImageDisplay();
     void paintEvent(QPaintEvent *event);
-
+    void setModelManager(ModelManager *passed);
 public slots:
-    void setImage(QImage passed_image);
-    void setAlphaChannel(QImage passed_image);
-        void setCenterOfRotation(int passed);
+    void update();
 signals:
-    void newImage(QImage image);
 
 private:
-    void mouseMoveEvent(QMouseEvent *event);
     QImage image;
-    QImage alpha_channel;
     int image_x;
     int image_y;
-    int center_line;
+    int center_of_rotation;
+    ModelManager *model;
 };
 
-#endif	/* _QDISPLAYWIDGET_H */
+#endif	/* _ImageDisplay_H */
 
