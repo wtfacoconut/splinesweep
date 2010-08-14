@@ -6,8 +6,8 @@
                    projectFiles="true">
       <itemPath>GUI.h</itemPath>
       <itemPath>ImageLoader.h</itemPath>
-      <itemPath>ModelGenerator.cpp</itemPath>
       <itemPath>ModelGenerator.h</itemPath>
+      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ModelManager.h</itemPath>
       <itemPath>QDisplayWidget.h</itemPath>
       <itemPath>SplineGenerator.h</itemPath>
       <itemPath>common.h</itemPath>
@@ -21,6 +21,8 @@
                    projectFiles="true">
       <itemPath>GUI.cpp</itemPath>
       <itemPath>ImageLoader.cpp</itemPath>
+      <itemPath>ModelGenerator.cpp</itemPath>
+      <itemPath>/home/matt/Programming/splinesweep/3Dscanner_mk2/ModelManager.cpp</itemPath>
       <itemPath>QDisplayWidget.cpp</itemPath>
       <itemPath>SplineGenerator.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
