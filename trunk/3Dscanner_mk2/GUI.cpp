@@ -25,7 +25,7 @@ GUI::GUI(QWidget *parent, const char *name) {
     spline_display->setModelManager(modelmanager);
     connect(modelmanager,SIGNAL(newModel()),image_display,SLOT(update()));
     connect(modelmanager,SIGNAL(newModel()),texture_display,SLOT(update()));
-    //connect(modelmanager,SIGNAL(newModel()),spline_display,SLOT(update()));
+    connect(modelmanager,SIGNAL(newModel()),spline_display,SLOT(update()));
     
     modelgen = new ModelGenerator();
     splinegen = new SplineGenerator();
