@@ -1,42 +1,41 @@
 /*
- * File:   QDisplayWidget.h
+ * File:   SplineDisplay.h
  * Author: matt
  *
  * Created on 20 January 2010, 11:54
  */
 
-#ifndef _QDISPLAYWIDGET_H
-#define	_QDISPLAYWIDGET_H
+#ifndef _SplineDisplay_H
+#define	_SplineDisplay_H
 
 //Standard Includes
 #include "common.h"
-#include <QMouseEvent>
+#include "ModelManager.h"
 #define WIDTH 320
 #define HEIGHT 240
 #define SCALE 4
 
-class QDisplayWidget : public QWidget {
+class SplineDisplay : public QWidget {
     Q_OBJECT
 public:
-    QDisplayWidget(QWidget *parent = 0, const char *name = 0);
-    virtual ~QDisplayWidget();
+    SplineDisplay(QWidget *parent = 0, const char *name = 0);
+    virtual ~SplineDisplay();
     void paintEvent(QPaintEvent *event);
-
+    void setModelManager(ModelManager *passed);
 public slots:
-    void setImage(QImage passed_image);
-    void setAlphaChannel(QImage passed_image);
-        void setCenterOfRotation(int passed);
+    void update();
 signals:
-    void newImage(QImage image);
 
 private:
-    void mouseMoveEvent(QMouseEvent *event);
     QImage image;
-    QImage alpha_channel;
     int image_x;
     int image_y;
-    int center_line;
+    int center_of_rotation;
+    int top_crop;
+    int bottom_crop;
+
+    ModelManager *model;
 };
 
-#endif	/* _QDISPLAYWIDGET_H */
+#endif	/* _SplineDisplay_H */
 
