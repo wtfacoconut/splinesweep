@@ -40,6 +40,10 @@ void TextureDisplay::paintEvent(QPaintEvent *event) {
     image = image.scaledToWidth(WIDTH);
     widgetPainter.drawImage(image_x, image_y, image);
     widgetPainter.drawLine(params.center_of_rotation*WIDTH, 0,params.center_of_rotation*WIDTH, HEIGHT);
+    pen.setColor(QColor(0,0,255));
+    widgetPainter.setPen(pen);
+    widgetPainter.drawLine(0, params.top_crop*HEIGHT,WIDTH, params.top_crop*HEIGHT);
+    widgetPainter.drawLine(0, HEIGHT-(params.top_crop*HEIGHT)-1,WIDTH,HEIGHT-(params.top_crop*HEIGHT)-1);
     widgetPainter.end();
     return;
 }

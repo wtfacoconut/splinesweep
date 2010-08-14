@@ -30,8 +30,9 @@ public:
     QVector<int> getSpline(int x);
     int getPoint(int x, int y);
     QImage getSplineImage(int location);
-    void setSpline(QVector<int> passed);;
-    
+    void setSpline(QVector<int> passed);
+    int getNumImages();
+
     bool textures_ready;
     bool images_ready;
     bool splines_ready;
@@ -43,7 +44,6 @@ public slots:
     void setTextureLocations(QStringList passed);
     void setParameters(Parameters passed);
 signals:
-    void newModel();
 private:
     QFileDialog *file_opener;
     QFileDialog *tex_opener;

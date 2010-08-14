@@ -262,3 +262,7 @@ void ImageManager::prevImage(bool passed) {
     image_display->setImage(getImage(image_index));
     texture_display->setImage(getTexture(image_index));
 }
+
+int ImageManager::getNumImages(){
+    return image_locations.size();
+}
