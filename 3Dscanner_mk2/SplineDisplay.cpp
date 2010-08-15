@@ -10,6 +10,9 @@
 SplineDisplay::SplineDisplay(QWidget *parent, const char *name) {
     image_x = 0;
     image_y = 0;
+    params.bottom_crop=0;
+    params.top_crop=0;
+    params.center_of_rotation=0.5;
     this->setFixedSize(WIDTH, HEIGHT);
 }
 
