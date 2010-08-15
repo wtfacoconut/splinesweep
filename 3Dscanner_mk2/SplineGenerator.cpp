@@ -76,7 +76,7 @@ void SplineGenerator::setMinThreshold(int passed) {
 void SplineGenerator::calcHorixontalValue() {
 
     QVector<int> current;
-    for (int y = 0; y < image.height(); y++) {
+    for (int y = image.height() -1; y >=0 ; y--) {
         //Find the position of the first x value along a each line
         int x_value=0;
         int x_max = threshold_min + 1;

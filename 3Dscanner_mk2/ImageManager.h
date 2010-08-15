@@ -39,6 +39,7 @@ public slots:
     void setTextureLocations(QStringList passed);
     void setParameters(Parameters passed);
 signals:
+    void selectedImage(int index);
 private:
     QFileDialog *file_opener;
     QFileDialog *tex_opener;

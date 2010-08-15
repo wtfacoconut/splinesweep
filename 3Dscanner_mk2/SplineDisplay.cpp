@@ -19,6 +19,11 @@ SplineDisplay::SplineDisplay(QWidget *parent, const char *name) {
 SplineDisplay::~SplineDisplay() {
 }
 
+void SplineDisplay::setImage(QImage passed){
+    image = passed;
+    repaint();
+}
+
 void SplineDisplay::setParamters(Parameters passed) {
     params = passed;
 }

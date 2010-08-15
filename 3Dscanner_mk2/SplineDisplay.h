@@ -22,6 +22,7 @@ public:
     void paintEvent(QPaintEvent *event);
 public slots:
     void setParamters(Parameters passed);
+    void setImage(QImage passed);
 signals:
 
 private:
