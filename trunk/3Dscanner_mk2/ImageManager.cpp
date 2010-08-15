@@ -181,6 +181,7 @@ void ImageManager::setImageLocations(QStringList passed) {
     image_index = 0;
     image_display->setImage(getFirstImage());
     texture_display->setImage(getFirstTexture());
+    emit selectedImage(image_index);
 }
 
 void ImageManager::setTextureLocations(QStringList passed) {
@@ -206,6 +207,7 @@ void ImageManager::setTextureLocations(QStringList passed) {
     image_index = 0;
     image_display->setImage(getFirstImage());
     texture_display->setImage(getFirstTexture());
+    emit selectedImage(image_index);
 }
 
 void ImageManager::loadImages(const QStringList & selected) {
@@ -235,6 +237,7 @@ void ImageManager::nextImage(bool passed) {
     if (image_index >= image_locations.size())image_index = 0;
     image_display->setImage(getImage(image_index));
     texture_display->setImage(getTexture(image_index));
+    emit selectedImage(image_index);
 }
 
 void ImageManager::prevImage(bool passed) {
@@ -242,6 +245,7 @@ void ImageManager::prevImage(bool passed) {
     if (image_index < 0)image_index = image_locations.size() - 1;
     image_display->setImage(getImage(image_index));
     texture_display->setImage(getTexture(image_index));
+    emit selectedImage(image_index);
 }
 
 int ImageManager::getNumImages() {

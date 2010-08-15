@@ -22,6 +22,8 @@ GUI::GUI(QWidget *parent, const char *name) {
 
     layout->addWidget(image_manager,0,0);
     layout->addWidget(model_manager,0,1);
+
+    connect(image_manager, SIGNAL(selectedImage(int)), model_manager,SLOT(updateSplineImage(int)));
 }
 
 
