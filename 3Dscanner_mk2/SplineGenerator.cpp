@@ -31,8 +31,7 @@ SplineGenerator::SplineGenerator() {
 SplineGenerator::~SplineGenerator() {
 }
 
-
-QVector<int> SplineGenerator::process(QImage passed){
+QVector<int> SplineGenerator::process(QImage passed) {
 
     image = passed;
     //threshold the image
@@ -76,9 +75,9 @@ void SplineGenerator::setMinThreshold(int passed) {
 void SplineGenerator::calcHorixontalValue() {
 
     QVector<int> current;
-    for (int y = image.height() -1; y >=0 ; y--) {
+    for (int y = image.height() - 1; y >= 0; y--) {
         //Find the position of the first x value along a each line
-        int x_value=0;
+        int x_value = 0;
         int x_max = threshold_min + 1;
         QRgb pixel;
         for (int x = 0; x < image.width(); x++) {
@@ -88,8 +87,61 @@ void SplineGenerator::calcHorixontalValue() {
                 break;
             }
         }
-        if(x_value>0)image.setPixel(x_value, y, qRgb(0, 0, 255));
-        current.push_front(x_value);
+        if (x_value > 0)image.setPixel(x_value, y, qRgb(255, 255, 255));
+
     }
+
+    QImage *image2 = new QImage(image.width(), image.height(), QImage::Format_RGB32);
+    image2->fill(qRgb(0, 0, 0));
+    QPainter image_painter(image2);
+    QPen pen;
+    pen.setWidth(1);
+    pen.setColor(QColor(255, 255, 255));
+    image_painter.setPen(pen);
+
+    QPoint point1;
+    QPoint point2;
+    point1.setX(image.width() / 2);
+    point1.setY(0);
+    point2.setX(image.width() / 2);
+    point2.setY(0);
+    bool new_point = false;
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            QRgb pixel = image.pixel(x, y);
+            int value = qRed(pixel);
+            if (value == 255) {
+                point1.setY(y);
+                point1.setX(x);
+                new_point = true;
+            }
+        }
+
+        if (new_point == true) {
+            //cerr<<"Drawing line!"<<endl;
+            new_point = false;
+            image_painter.drawLine(point2, point1);
+            point2.setX(point1.x());
+            point2.setY(point1.y());
+        }
+    }
+
+    point1.setX(image.width() / 2);
+    point1.setY(image.height());
+    image_painter.drawLine(point2, point1);
+    image_painter.end();
+
+    for (int y = 0; y < image2->height(); y++) {
+        for (int x = 0; x < image2->width(); x++) {
+            QRgb pixel = image2->pixel(x, y);
+            if (qRed(pixel) == 255) {
+                //cerr<<"Found pixel"<<endl;
+                current.push_back(x);
+                break;
+            }
+        }
+    }
+
     points = current;
+    cerr << "Size of points list: " << current.size() << endl;
 }

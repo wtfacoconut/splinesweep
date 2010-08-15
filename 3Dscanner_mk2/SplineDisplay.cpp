@@ -35,7 +35,7 @@ void SplineDisplay::paintEvent(QPaintEvent *event) {
     pen.setColor(QColor(0, 255, 0));
     widgetPainter.setPen(pen);
 
-    image = image.scaledToWidth(WIDTH);
+    image = image.scaledToWidth(WIDTH,Qt::SmoothTransformation);
     widgetPainter.drawImage(image_x, image_y, image);
     widgetPainter.drawLine(params.center_of_rotation*WIDTH, 0, params.center_of_rotation*WIDTH, HEIGHT);
     pen.setColor(QColor(0, 0, 255));
