@@ -21,7 +21,7 @@ GUI::GUI(QWidget *parent, const char *name) {
     //optiontabs->addTab(modelgen,"Model Building");
 
     layout->addWidget(image_manager,0,0);
-    //layout->addWidget(optiontabs,1,0,1,3);
+    layout->addWidget(model_manager,0,1);
 }
 
 
