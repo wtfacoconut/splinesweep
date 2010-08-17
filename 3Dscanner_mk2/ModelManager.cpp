@@ -14,6 +14,7 @@ ModelManager::ModelManager() {
     splines_ready = false;
     spline_display = new SplineDisplay();
     spline_generator = new SplineGenerator();
+    model_generator = new ModelGenerator();
 
     QPushButton *gen_splines = new QPushButton("Generate Splines");
     QPushButton *gen_model = new QPushButton("Generate Model");
@@ -47,6 +48,7 @@ ModelManager::ModelManager() {
     crop_layout->addWidget(new QLabel("Center of Rotation"), 1, 0);
     crop_layout->addWidget(center_spinbox, 1, 1);
     options_tabs->addTab(crop_controls, "Crop Controls");
+    options_tabs->addTab(model_generator,"Model Settings");
 
     layout->addWidget(gen_splines,2,0);
     layout->addWidget(gen_model,2,1);

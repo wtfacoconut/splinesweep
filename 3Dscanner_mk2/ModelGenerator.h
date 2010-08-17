@@ -8,6 +8,13 @@
 #ifndef _MODELGENERATOR_H
 #define	_MODELGENERATOR_H
 #include "common.h"
+#include "ImageManager.h"
+
+struct point {
+    int x;
+    int y;
+    int z;
+};
 
 class ModelGenerator : public QWidget {
     Q_OBJECT
@@ -16,45 +23,20 @@ public:
     virtual ~ModelGenerator();
 
 public slots:
-    void setEnableTexture(bool passed);
-    void setNumImages(int passed);
-    void setImage(QImage passed);
-    void setTexture(QImage passed);
-
+    void setParameters(Parameters passed);
+    void setImageManager(ImageManager *passed);
+    void setSplines(QVector< QVector<int> > passed);
 signals:
-    void requestImage(int passed);
-    void requestTexture(int passed);
-    void newImage(QImage passed);
-    void newTexture(QImage passed);
-    void newCenterOfRotation(int passed);
-
 private slots:
-    void generate(bool passed);
-    void setTopCrop(int passed);
-    void setBottomCrop(int passed);
-    void setCenterOfRotation(int passed);
-
+    void setLaserAngle(double passed);
 private:
-    void addSpline();
-    void process();
-    QImage crop(QImage passed);
-    bool enable_texture;
-    QImage current_texture;
-    QImage current_spline;
-
-
+    double laserAngle;
     QGridLayout *layout;
-    QPushButton *generate_button;
-    QSpinBox *top_crop_spinbox;
-    QSpinBox *bottom_crop_spinbox;
-    QSpinBox *center_spinbox;
-    bool enabled;
-    int num_images;
-    int center_of_rotation;
-    int top_crop;
-    int bottom_crop;
-    QVector<QVector <QRgb> > texture_map;
-    QVector<QVector <double> > depth_map;
+    Parameters params;
+    ImageManager *image_manager;
+    QVector< QVector <int> > splines;
+    QVector< QVector <point> > mesh;
+    QImage texture;
 };
 
 #endif	/* _MODELGENERATOR_H */

@@ -11,6 +11,7 @@
 #include "ImageManager.h"
 #include "SplineGenerator.h"
 #include "SplineDisplay.h"
+#include "ModelGenerator.h"
 
 class ModelManager : public QWidget {
     Q_OBJECT
@@ -34,6 +35,7 @@ private:
     QImage getSplineImage(int location);
     void initCropControls();
 
+    ModelGenerator *model_generator;
     ImageManager *image_manager;
     SplineGenerator *spline_generator;
     SplineDisplay *spline_display;
