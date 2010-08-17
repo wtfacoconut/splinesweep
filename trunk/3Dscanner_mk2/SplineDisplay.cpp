@@ -24,8 +24,9 @@ void SplineDisplay::setImage(QImage passed){
     repaint();
 }
 
-void SplineDisplay::setParamters(Parameters passed) {
+void SplineDisplay::setParameters(Parameters passed) {
     params = passed;
+    repaint();
 }
 
 void SplineDisplay::paintEvent(QPaintEvent *event) {
@@ -41,7 +42,7 @@ void SplineDisplay::paintEvent(QPaintEvent *event) {
     pen.setColor(QColor(0, 0, 255));
     widgetPainter.setPen(pen);
     widgetPainter.drawLine(0, params.top_crop*HEIGHT, WIDTH, params.top_crop * HEIGHT);
-    widgetPainter.drawLine(0, HEIGHT - (params.top_crop * HEIGHT) - 1, WIDTH, HEIGHT - (params.top_crop * HEIGHT) - 1);
+    widgetPainter.drawLine(0, HEIGHT - (params.bottom_crop * HEIGHT) - 1, WIDTH, HEIGHT - (params.bottom_crop * HEIGHT) - 1);
     widgetPainter.end();
     return;
 }

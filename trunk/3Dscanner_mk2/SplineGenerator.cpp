@@ -8,6 +8,7 @@
 #include <qt4/QtCore/qobject.h>
 
 #include "SplineGenerator.h"
+#include <QDoubleSpinBox>
 
 SplineGenerator::SplineGenerator() {
     layout = new QGridLayout(this);
@@ -19,11 +20,15 @@ SplineGenerator::SplineGenerator() {
     threshold_max_spinbox->setRange(0, 255);
     threshold_min_spinbox->setValue(threshold_min);
     threshold_max_spinbox->setValue(threshold_max);
-    layout->addWidget(new QLabel("Spline Generator Settings"), 0, 0, 1, 3);
-    layout->addWidget(new QLabel("Threshold Max"), 1, 0);
-    layout->addWidget(threshold_max_spinbox, 1, 1);
-    layout->addWidget(new QLabel("Threshold Min"), 1, 2);
-    layout->addWidget(threshold_min_spinbox, 1, 3);
+    //layout->addWidget(new QLabel("Spline Generator Settings"), 0, 0, 1, 3);
+    layout->addWidget(new QLabel("Threshold Max"), 0, 0);
+    layout->addWidget(threshold_max_spinbox, 0, 1);
+    layout->addWidget(new QLabel("Threshold Min"), 0, 2);
+    layout->addWidget(threshold_min_spinbox, 0, 3);
+
+
+
+
     connect(threshold_max_spinbox, SIGNAL(valueChanged(int)), this, SLOT(setMaxThreshold(int)));
     connect(threshold_min_spinbox, SIGNAL(valueChanged(int)), this, SLOT(setMinThreshold(int)));
 }
