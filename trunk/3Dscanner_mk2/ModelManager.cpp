@@ -30,6 +30,7 @@ ModelManager::~ModelManager() {
 
 void ModelManager::setImageManager(ImageManager *passed) {
     image_manager = passed;
+
 }
 
 void ModelManager::generateSplines(bool passed) {
@@ -39,7 +40,8 @@ void ModelManager::generateSplines(bool passed) {
     }
     cerr<<"Generated "<<image_manager->getNumImages()<<" splines"<<endl;
     splines_ready = true;
-    //updateSplineImage(0);
+    width = image_manager->getFirstImage().size().width(); //Get the width of the images so the spline image is genreated properly.
+    updateSplineImage(0);
 }
 
 
@@ -67,7 +69,7 @@ QImage ModelManager::getSplineImage(int location) {
         return QImage(800, 600, QImage::Format_RGB32);
     };*/
 
-    QImage spline_image = QImage(800, splines[location].size(), QImage::Format_RGB32);
+    QImage spline_image = QImage(width, splines[location].size(), QImage::Format_RGB32);
     for (int loop = splines[location].size()-1; loop >=0 ; loop--) {
         QRgb pixel;
         pixel = qRgb(255, 0, 0);

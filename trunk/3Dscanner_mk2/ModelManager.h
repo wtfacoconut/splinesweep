@@ -33,6 +33,7 @@ private:
     QGridLayout *layout;
     QTabWidget *options_tabs;
     bool splines_ready;
+    int width;
 
 };
 
