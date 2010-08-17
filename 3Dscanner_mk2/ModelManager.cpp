@@ -138,6 +138,6 @@ void ModelManager::newCenter(double passed) {
     emit newParameters(params);
 }
 void ModelManager::generateModel(bool passed){
-    model_generator->generateModel(splines,QString("test"));
+    model_generator->generateModel(splines,QString("output"));
 }
 
