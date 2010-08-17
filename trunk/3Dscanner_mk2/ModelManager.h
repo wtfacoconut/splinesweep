@@ -30,6 +30,7 @@ private slots:
     void newTopCrop(double passed);
     void newBottomCrop(double passed);
     void newCenter(double passed);
+    void generateModel(bool passed);
 
 private:
     QImage getSplineImage(int location);

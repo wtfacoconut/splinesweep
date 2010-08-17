@@ -24,7 +24,7 @@ class ModelGenerator : public QWidget {
 public:
     ModelGenerator();
     virtual ~ModelGenerator();
-    void generateModel(QVector< QVector<int> > passed);
+    void generateModel(QVector< QVector<int> > passed,QString passed_name);
 public slots:
     void setParameters(Parameters passed);
     void setImageManager(ImageManager *passed);
@@ -40,6 +40,7 @@ private:
     QVector< QVector <int> > splines;
     QVector< QVector <point> > mesh;
     QImage texture;
+    QString filename;
 };
 
 #endif	/* _MODELGENERATOR_H */

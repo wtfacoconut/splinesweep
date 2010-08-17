@@ -38,8 +38,9 @@ void ModelGenerator::setLaserAngle(double passed) {
     laserAngle = passed;
 }
 
-void ModelGenerator::generateModel(QVector< QVector<int> > passed) {
+void ModelGenerator::generateModel(QVector< QVector<int> > passed,QString passed_name) {
     splines = passed;
+    filename = passed_name;
     int number_of_rotations = image_manager->number_of_images;
     int image_width = image_manager->getFirstImage().width();
     int image_height = image_manager->getFirstImage().height();
@@ -49,10 +50,30 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed) {
     for (int x = 0; x < number_of_rotations; x++) {
         QImage tex = image_manager->getTexture(x);
         tex = tex.scaled(image_width,image_height);
-        for (int y = 0; y = image_height; y++) {
+        for (int y = 0; y < image_height; y++) {
             texture.setPixel(x,y,tex.pixel(splines[x][y],y));
         }
     }
 
-    
+
+    //THINGS TO FIX!!!!
+    //add cropping of top and bottom
+    //add setting center of rotation
+
+    for(int x =0; x<number_of_rotations;x++)
+    {
+        QVector<point> spl;
+        mesh.push_back(spl);
+        double rotation = (360/(double)number_of_rotations) * x;
+        for(int y =0; y<image_height; y++)
+        {
+            point po;
+            po.x = (double)cos((double)(rotation/ 57.29578))* ((image_width/2)-splines[x][y]);
+            po.y=y;
+            po.z=(double)sin((double)(rotation/ 57.29578))* ((image_width/2)-splines[x][y]);
+            cerr<<"point @ "<<po.x<<" "<<po.y<<" "<<po.z<<endl;
+            mesh[x].push_back(po);
+        }
+    }
+
 }
