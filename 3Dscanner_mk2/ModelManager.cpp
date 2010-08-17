@@ -7,6 +7,7 @@
 
 #include "ModelManager.h"
 
+
 ModelManager::ModelManager() {
     params.bottom_crop=0;
     params.top_crop =0;
@@ -15,6 +16,7 @@ ModelManager::ModelManager() {
     spline_display = new SplineDisplay();
     spline_generator = new SplineGenerator();
     model_generator = new ModelGenerator();
+
 
     QPushButton *gen_splines = new QPushButton("Generate Splines");
     QPushButton *gen_model = new QPushButton("Generate Model");
@@ -71,6 +73,8 @@ void ModelManager::initCropControls() {
 
 void ModelManager::setImageManager(ImageManager *passed) {
     image_manager = passed;
+    model_generator->setImageManager(passed);
+
 }
 
 void ModelManager::generateSplines(bool passed) {
