@@ -21,7 +21,7 @@ public:
     virtual ~SplineDisplay();
     void paintEvent(QPaintEvent *event);
 public slots:
-    void setParamters(Parameters passed);
+    void setParameters(Parameters passed);
     void setImage(QImage passed);
 signals:
 

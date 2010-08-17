@@ -22,18 +22,28 @@ public:
 public slots:
     void generateSplines(bool passed);
     void updateSplineImage(int index);
+    signals:
+    void newParameters(Parameters params);
+
+private slots:
+    void newTopCrop(double passed);
+    void newBottomCrop(double passed);
+    void newCenter(double passed);
 
 private:
     QImage getSplineImage(int location);
+    void initCropControls();
 
     ImageManager *image_manager;
     SplineGenerator *spline_generator;
     SplineDisplay *spline_display;
     QVector< QVector<int> >splines;
     QGridLayout *layout;
+    QGridLayout *crop_layout;
     QTabWidget *options_tabs;
     bool splines_ready;
     int width;
+    Parameters params;
 
 };
 
