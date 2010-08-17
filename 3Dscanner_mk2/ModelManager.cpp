@@ -59,6 +59,7 @@ ModelManager::ModelManager() {
     connect(bottomcrop_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newBottomCrop(double)));
     connect(center_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newCenter(double)));
     connect(this, SIGNAL(newParameters(Parameters)),spline_display,SLOT(setParameters(Parameters)));
+    connect(gen_model,SIGNAL(clicked(bool)),this,SLOT(generateModel(bool)));
 
 
 }
@@ -136,3 +137,7 @@ void ModelManager::newCenter(double passed) {
     params.center_of_rotation = passed;
     emit newParameters(params);
 }
+void ModelManager::generateModel(bool passed){
+    model_generator->generateModel(splines,QString("test"));
+}
+
