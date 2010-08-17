@@ -16,14 +16,14 @@ ModelManager::ModelManager() {
     spline_generator = new SplineGenerator();
 
     QPushButton *gen_splines = new QPushButton("Generate Splines");
-
+    QPushButton *gen_model = new QPushButton("Generate Model");
 
     layout = new QGridLayout(this);
-    layout->addWidget(spline_display, 0, 0);
+    layout->addWidget(spline_display, 0, 0,1,2);
     options_tabs = new QTabWidget();
     options_tabs->addTab(spline_generator, "Spline Generator Settings");
     //initCropControls();
-    layout->addWidget(options_tabs);
+    layout->addWidget(options_tabs,1,0,1,2);
     //layout->addWidget(spline_generator);
 
 
@@ -48,7 +48,8 @@ ModelManager::ModelManager() {
     crop_layout->addWidget(center_spinbox, 1, 1);
     options_tabs->addTab(crop_controls, "Crop Controls");
 
-    layout->addWidget(gen_splines);
+    layout->addWidget(gen_splines,2,0);
+    layout->addWidget(gen_model,2,1);
     connect(gen_splines, SIGNAL(clicked(bool)), this, SLOT(generateSplines(bool)));
     connect(topcrop_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newTopCrop(double)));
     connect(bottomcrop_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newBottomCrop(double)));
