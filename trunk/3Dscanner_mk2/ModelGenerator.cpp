@@ -38,7 +38,7 @@ void ModelGenerator::setLaserAngle(double passed) {
     laserAngle = passed;
 }
 
-void ModelGenerator::generateModel(QVector< QVector<int> > passed,QString passed_name) {
+void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passed_name) {
     splines = passed;
     filename = passed_name;
     int number_of_rotations = image_manager->number_of_images;
@@ -49,9 +49,9 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed,QString passed
     texture = QImage(number_of_rotations, image_width, QImage::Format_RGB32);
     for (int x = 0; x < number_of_rotations; x++) {
         QImage tex = image_manager->getTexture(x);
-        tex = tex.scaled(image_width,image_height);
+        tex = tex.scaled(image_width, image_height);
         for (int y = 0; y < image_height; y++) {
-            texture.setPixel(x,y,tex.pixel(splines[x][y],y));
+            texture.setPixel(x, y, tex.pixel(splines[x][y], y));
         }
     }
 
@@ -60,20 +60,43 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed,QString passed
     //add cropping of top and bottom
     //add setting center of rotation
 
-    for(int x =0; x<number_of_rotations;x++)
-    {
+    for (int x = 0; x < number_of_rotations; x++) {
         QVector<point> spl;
         mesh.push_back(spl);
-        double rotation = (360/(double)number_of_rotations) * x;
-        for(int y =0; y<image_height; y++)
-        {
+        double rotation = (360 / (double) number_of_rotations) * x;
+        for (int y = 0; y < image_height; y++) {
             point po;
-            po.x = (double)cos((double)(rotation/ 57.29578))* ((image_width/2)-splines[x][y]);
-            po.y=y;
-            po.z=(double)sin((double)(rotation/ 57.29578))* ((image_width/2)-splines[x][y]);
-            cerr<<"point @ "<<po.x<<" "<<po.y<<" "<<po.z<<endl;
+            po.x = (double) cos((double) (rotation / 57.29578))* ((image_width / 2) - splines[x][y]);
+            po.y = y;
+            po.z = (double) sin((double) (rotation / 57.29578))* ((image_width / 2) - splines[x][y]);
+            //cerr << "point @ " << po.x << " " << po.y << " " << po.z << endl;
             mesh[x].push_back(po);
         }
     }
+
+    QFile test;
+    filename.append(".obj");
+    test.setFileName(filename);
+    test.open(QIODevice::WriteOnly);
+    for (int y = 0; y < image_height; y++) {
+        for (int x = 0; x < number_of_rotations; x++) {
+
+            QString x_val = QString::number(mesh[x][y].x);
+            QString y_val = QString::number(mesh[x][y].y);
+            QString z_val = QString::number(mesh[x][y].z);
+
+            QString line;
+            line.append("v ");
+            line.append(x_val);
+            line.append(" ");
+            line.append(y_val);
+            line.append(" ");
+            line.append(z_val);
+            line.append("\n");
+            cout<<line.toStdString().c_str();
+            test.write(line.toStdString().c_str());
+        }
+    }
+    test.close();
 
 }
