@@ -9,6 +9,9 @@
 #define	_MODELGENERATOR_H
 #include "common.h"
 #include "ImageManager.h"
+#include <math.h>
+
+using namespace std;
 
 struct point {
     int x;
@@ -21,7 +24,7 @@ class ModelGenerator : public QWidget {
 public:
     ModelGenerator();
     virtual ~ModelGenerator();
-
+    void generateModel(QVector< QVector<int> > passed);
 public slots:
     void setParameters(Parameters passed);
     void setImageManager(ImageManager *passed);
