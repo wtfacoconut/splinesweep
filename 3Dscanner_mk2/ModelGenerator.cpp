@@ -65,6 +65,9 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passe
     QString texture_file = filename;
     texture_file.append(".png");
     texture.save(texture_file);
+    QString mat_file = filename;
+    mat_file.append(".mtl");
+
     //THINGS TO FIX!!!!
     //add cropping of top and bottom
     //add setting center of rotation
@@ -93,6 +96,18 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passe
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
 
+    for (int y = splines[0].size()-1; y >=0 ; y--) {
+        for (int x = 0; x <splines.size() ; x++) {
+            QString line = QString("vt ");
+            line.append(QString(" ").append(QString::number((double) (1 / (double)splines.size())*x )));
+            line.append(QString(" ").append(QString::number((double) (1 / (double) splines[0].size())*y)));
+            out<<line.toStdString().c_str()<<endl;
+        }
+    }
+    out << "mtllib " << mat_file.toStdString().c_str()<< endl;
+    out << "usemtl Textured" << endl;
+
+    int count = 1;
     for (int y = 0; y < image_height; y++) {
         for (int x = 0; x < number_of_rotations; x++) {
 
@@ -109,6 +124,7 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passe
             line.append(z_val);
             line.append("\n");
             out << line.toStdString().c_str();
+            count++;
         }
     }
 
@@ -118,7 +134,7 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passe
     //cout<<"f v2 v3 v101 v102"<<endl;
     //cout<<"f v3 v4 v103 v104"<<endl;
 
-    int count = 1;
+    count = 1;
     for (int y = 0; y < splines[0].size() - 1; y++) {
         for (int x = 0; x < splines.size() - 1; x++) {
             QString line;
@@ -131,28 +147,38 @@ void ModelGenerator::generateModel(QVector< QVector<int> > passed, QString passe
 
             line.append("f ");
             line.append(tl);
+            line.append("/");
+            line.append(QString::number(count));
             line.append(tr);
+            line.append("/");
+            line.append(QString::number(count + 1));
             line.append(br);
+            line.append("/");
+            line.append(QString::number(count + splines.size() + 1));
             line.append(bl);
+            line.append("/");
+            line.append(QString::number(count + splines.size()));
             line.append("\n");
             out << line.toStdString().c_str();
             count++;
         }
     }
 
+
+
     file.close();
 
-    QString mat_file = filename;
-    mat_file.append(".mtl");
+
     QFile mtl;
     mtl.setFileName(mat_file);
+    mtl.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out2(&mtl);
     QString mat_file_line = QString("newmtl Textured \nKa 1.000 1.000 1.000\nKd 1.000 1.000 1.000\nKs 0.000 0.000 0.000\nd 1.0\nTr 1.0\nillum 2\nmap_Ka ");
 
     mat_file_line.append(texture_file);
-    mat_file_line.append("\n map_Kd ");
+    mat_file_line.append("\nmap_Kd ");
     mat_file_line.append(texture_file);
-    out2<<mat_file_line.toStdString().c_str();
+    out2 << mat_file_line.toStdString().c_str();
 
     mtl.close();
 

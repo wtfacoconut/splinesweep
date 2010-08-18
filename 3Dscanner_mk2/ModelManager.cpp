@@ -59,6 +59,7 @@ ModelManager::ModelManager() {
     connect(bottomcrop_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newBottomCrop(double)));
     connect(center_spinbox,SIGNAL(valueChanged(double)),this,SLOT(newCenter(double)));
     connect(this, SIGNAL(newParameters(Parameters)),spline_display,SLOT(setParameters(Parameters)));
+    connect(this, SIGNAL(newParameters(Parameters)),model_generator,SLOT(setParameters(Parameters)));
     connect(gen_model,SIGNAL(clicked(bool)),this,SLOT(generateModel(bool)));
 
 
